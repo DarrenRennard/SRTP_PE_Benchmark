@@ -1,0 +1,20 @@
+{
+  "agent": {
+    "model": "none",
+    "name": "deterministic-example-agent",
+    "notes": "Computes the same approximate radial checks as the starter benchmark.",
+    "version": "0.1.0"
+  },
+  "solution": {
+    "bus_voltages_pu": {
+      "load_1": 0.99745,
+      "slack": 1.0
+    },
+    "explanation": "The load bus voltage is estimated with a first-order radial voltage drop and the line flow is the apparent power of the downstream load.",
+    "line_flows_mva": {
+      "slack->load_1": 1.225765
+    },
+    "served_load_mw": 1.2
+  }
+}
+

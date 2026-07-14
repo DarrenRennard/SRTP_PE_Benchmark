@@ -1,0 +1,44 @@
+{
+  "task_id": "pfb_radial_001",
+  "base_mva": 10.0,
+  "description": "One-slack, one-load radial task used to demonstrate executable evaluation.",
+  "buses": [
+    {
+      "id": "slack",
+      "type": "slack",
+      "voltage_pu": 1.0,
+      "v_min_pu": 0.99,
+      "v_max_pu": 1.01
+    },
+    {
+      "id": "load_1",
+      "type": "load",
+      "p_load_mw": 1.2,
+      "q_load_mvar": 0.25,
+      "v_min_pu": 0.95,
+      "v_max_pu": 1.05
+    }
+  ],
+  "lines": [
+    {
+      "from": "slack",
+      "to": "load_1",
+      "r_pu": 0.015,
+      "x_pu": 0.03,
+      "limit_mva": 2.0
+    }
+  ],
+  "tolerances": {
+    "voltage_pu": 0.005,
+    "line_flow_mva": 0.02,
+    "served_load_mw": 0.001
+  },
+  "scoring": {
+    "format": 0.2,
+    "voltage": 0.3,
+    "line_flow": 0.2,
+    "served_load": 0.2,
+    "explanation": 0.1
+  }
+}
+
