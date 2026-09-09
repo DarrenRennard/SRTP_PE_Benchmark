@@ -1,9 +1,10 @@
 func_timeout
 llama_index==0.10.65
 matplotlib
-numpy
+numpy==1.26.4
 onnxruntime
 openai==1.41.0
+httpx==0.27.2
 pandas
 psutil==5.9.4
 pyswarms==1.3.0
@@ -15,18 +16,19 @@ sse-starlette
 python-dotenv
 
 
-# Newly added dependencies
-llama-index-output-parsers-guardrails
-guardrails-ai
-langgraph
-langchain
-langchain-community
-langchain-openai
-langchain-core
-pydantic
+# Compatible LLM stack: keep these versions together.
+llama-index-output-parsers-guardrails==0.1.3
+guardrails-ai==0.4.5
+langgraph==0.2.76
+langchain==0.2.17
+langchain-community==0.2.19
+langchain-openai==0.1.25
+langchain-core==0.2.43
+pydantic==2.11.5
 ddgs
-mcp
+mcp==1.9.4
+beautifulsoup4>=4.12,<5
 
 # Optional: production-grade long-term memory backend
 psycopg2-binary
-langgraph-checkpoint-postgres
+langgraph-checkpoint-postgres==2.0.15

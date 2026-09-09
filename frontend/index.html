@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PE-MAS Studio</title>
+    <title>PE-GPT 2.0 Studio</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f2328'/%3E%3Cpath d='M17 3 8 18h7l-1 11 10-16h-7l0-10Z' fill='%23ffffff'/%3E%3C/svg%3E">
     <script src="https://gcore.jsdelivr.net/npm/vue@3.3.4/dist/vue.global.prod.js"></script>
     <script src="https://gcore.jsdelivr.net/npm/marked@9.1.2/marked.min.js"></script>
@@ -3573,7 +3573,7 @@
         <div class="brand">
             <div class="brand-mark"><i data-lucide="zap" class="w-5 h-5"></i></div>
             <div class="brand-copy">
-                <div class="brand-title">PE-MAS Studio</div>
+                <div class="brand-title">PE-GPT 2.0 Studio</div>
                 <div class="brand-subtitle">Power electronics design workspace</div>
             </div>
         </div>
@@ -3637,7 +3637,7 @@
                     <div v-if="messages.length === 0" class="empty-state">
                         <section class="launch-hero">
                             <div class="launch-copy">
-                                <div class="empty-kicker">PE-MAS</div>
+                                <div class="empty-kicker">PE-GPT 2.0</div>
                                 <div class="empty-title">Design gate first.</div>
                                 <p class="empty-copy">
                                     Lock the envelope, compare topology paths, expose assumptions, then generate artifacts with evidence.
@@ -4545,7 +4545,7 @@ const peMasApp = createApp({
             {
                 title: 'Release audit',
                 short: 'Risk + evidence',
-                text: 'Audit the current PE-MAS output like a senior power electronics design review. Check spec lock, topology decision records, magnetics assumptions, MOSFET/SR stress, RCD loss, TL431/opto loop evidence, EMI/safety/layout gates, BOM alternates, and release artifacts.'
+                text: 'Audit the current PE-GPT 2.0 output like a senior power electronics design review. Check spec lock, topology decision records, magnetics assumptions, MOSFET/SR stress, RCD loss, TL431/opto loop evidence, EMI/safety/layout gates, BOM alternates, and release artifacts.'
             },
             {
                 title: 'PE QA review',
@@ -4990,7 +4990,7 @@ const peMasApp = createApp({
 
         const cockpitSubtitle = computed(() => {
             if (latestDesignMeta.value?.mode === 'requirements_intake' || currentCheckpoint.value?.title === 'Requirements Gate') {
-                return 'PE-MAS is holding the workflow at the same point a power engineer would: specs, assumptions, topology candidates, risk, and traceability before schematic/BOM release.';
+                return 'PE-GPT 2.0 is holding the workflow at the same point a power engineer would: specs, assumptions, topology candidates, risk, and traceability before schematic/BOM release.';
             }
             return 'Each stage is treated as a gated engineering artifact. A pass means the next review can start; it does not automatically make the design release-ready.';
         });
@@ -5327,7 +5327,7 @@ const peMasApp = createApp({
                     eyebrow: 'Specification gate',
                     stateLabel: 'spec lock',
                     headline: 'Lock critical specs before schematic or BOM',
-                    subline: 'PE-MAS captured the design envelope and is intentionally holding release generation until assumptions are accepted or edited.',
+                    subline: 'PE-GPT 2.0 captured the design envelope and is intentionally holding release generation until assumptions are accepted or edited.',
                     recommendation: 'Adopt defaults, or edit known safety, standby, mechanical, cost, vendor, or hold-up inputs first.',
                     metrics: [
                         { label: 'Recognized specs', value: String(specs.length || '-') },
@@ -7023,7 +7023,7 @@ const peMasApp = createApp({
             const raw = cleanText(error?.message || error || 'Workflow ended with an error.', { compact: true });
             const low = raw.toLowerCase();
             if (low.includes('quota') || low.includes('insufficient_quota') || low.includes('rate limit')) {
-                return 'Model quota or rate limit was reached. PE-MAS stopped this run before completion; check provider credentials or switch to a fallback model.';
+                return 'Model quota or rate limit was reached. PE-GPT 2.0 stopped this run before completion; check provider credentials or switch to a fallback model.';
             }
             if (low.includes('api key') || low.includes('401') || low.includes('invalid_api_key')) {
                 return 'Model provider credential is invalid or missing. Check local environment configuration and restart the server.';
@@ -7297,7 +7297,7 @@ const peMasApp = createApp({
             const rawMessages = Array.isArray(entry.messages) ? entry.messages : [];
             return {
                 id: entry.id || makeId('hist'),
-                title: truncateForHistory(entry.title || firstUserMessage(rawMessages) || 'PE-MAS run', 96),
+                title: truncateForHistory(entry.title || firstUserMessage(rawMessages) || 'PE-GPT 2.0 run', 96),
                 createdAt: entry.createdAt || new Date().toISOString(),
                 updatedAt: entry.updatedAt || entry.createdAt || new Date().toISOString(),
                 sessionId: entry.sessionId || '',
@@ -7362,7 +7362,7 @@ const peMasApp = createApp({
             const serializableMessages = JSON.parse(JSON.stringify(messages.value || [])).map(slimMessageForHistory);
             if (!serializableMessages.length) return;
             const now = new Date().toISOString();
-            const title = firstUserMessage(serializableMessages) || 'PE-MAS run';
+            const title = firstUserMessage(serializableMessages) || 'PE-GPT 2.0 run';
             const entry = {
                 id: currentConversationId.value,
                 title: title.length > 72 ? `${title.slice(0, 69)}...` : title,
@@ -7600,20 +7600,20 @@ function showUiErrorBanner(message) {
 
 peMasApp.config.errorHandler = (err, instance, info) => {
     const message = err?.message || String(err || 'Unknown UI error');
-    console.error('[PE-MAS UI error]', info, err);
+    console.error('[PE-GPT 2.0 UI error]', info, err);
     showUiErrorBanner(`UI render error: ${message}. Open the browser console for the stack trace.`);
 };
 
 window.addEventListener('error', (event) => {
     const message = event?.message || String(event?.error || 'Unknown browser error');
-    console.error('[PE-MAS browser error]', event.error || event);
+    console.error('[PE-GPT 2.0 browser error]', event.error || event);
     showUiErrorBanner(`Browser error: ${message}. Open the browser console for the stack trace.`);
 });
 
 window.addEventListener('unhandledrejection', (event) => {
     const reason = event?.reason;
     const message = reason?.message || String(reason || 'Unhandled promise rejection');
-    console.error('[PE-MAS promise rejection]', reason || event);
+    console.error('[PE-GPT 2.0 promise rejection]', reason || event);
     showUiErrorBanner(`Async error: ${message}. Open the browser console for the stack trace.`);
 });
 

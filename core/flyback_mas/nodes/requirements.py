@@ -49,7 +49,7 @@ def get_llm():
         kwargs["base_url"] = runtime["api_base"]
     return ChatOpenAI(**kwargs)
 
-from langchain_core.pydantic_v1 import BaseModel, Field
+from pydantic.v1 import BaseModel, Field
 from typing import Optional
 
 # Pydantic Model for Robust Extraction

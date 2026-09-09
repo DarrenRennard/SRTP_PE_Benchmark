@@ -127,7 +127,7 @@ class StudioRequirementsGateService:
                 "phase": "requirements",
                 "title": "Requirements Gate",
                 "question": (
-                    "Review the extracted design envelope. PE-MAS will not generate a release schematic until "
+                    "Review the extracted design envelope. PE-GPT 2.0 will not generate a release schematic until "
                     "critical specs and assumptions are accepted or edited."
                 ),
                 "options": [row.get("option", "") for row in decision_options],

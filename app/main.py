@@ -1,4 +1,4 @@
-"""Application factory for PE-MAS."""
+"""Application factory for PE-GPT 2.0."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ from app.api.routers import health, plecs, requirements, topologies
 def create_api_app() -> FastAPI:
     """Create the API-only application without the Studio frontend."""
 
-    api = FastAPI(title="PE-MAS API")
+    api = FastAPI(title="PE-GPT 2.0 API")
     api.add_middleware(
         CORSMiddleware,
         allow_origins=["*"],
@@ -36,7 +36,7 @@ def create_api_app() -> FastAPI:
           <head>
             <meta charset="utf-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <title>PE-MAS Modular API</title>
+            <title>PE-GPT 2.0 Modular API</title>
             <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f2328'/%3E%3Cpath d='M17 3 8 18h7l-1 11 10-16h-7l0-10Z' fill='%23ffffff'/%3E%3C/svg%3E">
             <style>
               body { margin: 0; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f5f5f7; color: #1d1d1f; }
@@ -51,7 +51,7 @@ def create_api_app() -> FastAPI:
           </head>
           <body>
             <main>
-              <h1>PE-MAS API is running</h1>
+              <h1>PE-GPT 2.0 API is running</h1>
               <p>The API backend is healthy. For the full Studio UI and Flyback MAS workflow, run <code>make run</code>.</p>
               <section class="panel">
                 <p><strong>Useful links</strong></p>
@@ -117,7 +117,7 @@ def create_default_app() -> FastAPI:
     except ModuleNotFoundError as exc:
         if env_flag("PE_MAS_WARN_ON_FALLBACK", default=False):
             warnings.warn(
-                "Falling back to PE-MAS API-only mode because a Studio optional "
+                "Falling back to PE-GPT 2.0 API-only mode because a Studio optional "
                 f"dependency is unavailable: {exc.name}",
                 RuntimeWarning,
                 stacklevel=2,

@@ -65,7 +65,7 @@ def openai_init(openai_model=None, api_key=None, api_url=None, require_key=False
 
     if require_key and not api_key:
         raise RuntimeError(
-            "Model provider credential is not configured. Set PE_MAS_LLM_CREDENTIAL locally before running PE-MAS."
+            "Model provider credential is not configured. Set PE_MAS_LLM_CREDENTIAL locally before running PE-GPT 2.0."
         )
 
     if not api_key:

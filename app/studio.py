@@ -46,7 +46,7 @@ except Exception:
 BASE_DIR = Path(__file__).resolve().parents[1]
 load_dotenv(BASE_DIR / ".env")
 
-app = FastAPI(title="PE-MAS Industrial Studio")
+app = FastAPI(title="PE-GPT 2.0 Studio")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -4034,7 +4034,7 @@ def _looks_like_capability_question(user_query: str) -> bool:
 def _capability_answer(user_query: str) -> str:
     if _contains_chinese(user_query):
         return (
-            "你好，我是 PE-MAS Studio，一个面向电力电子设计的多智能体工作台。\n\n"
+            "你好，我是 PE-GPT 2.0 Studio，一个面向电力电子设计的多智能体工作台。\n\n"
             "我主要能做四类事：\n"
             "1. 解释电源拓扑和工程概念：例如 Flyback、LLC、CCM/DCM、RHPZ、Vds 应力、纹波和 EMI。\n"
             "2. 做完整电源设计流程：从需求提取、理论参数、磁件建议、器件选型、仿真到设计审查和报告。\n"
@@ -4044,7 +4044,7 @@ def _capability_answer(user_query: str) -> str:
         )
 
     return (
-        "I am PE-MAS Studio, a multi-agent workspace for power-electronics design.\n\n"
+        "I am PE-GPT 2.0 Studio, a multi-agent workspace for power-electronics design.\n\n"
         "I can help with four main tasks:\n"
         "1. Explain power-converter concepts such as flyback, LLC, CCM/DCM, RHPZ, Vds stress, ripple, and EMI.\n"
         "2. Run an end-to-end design workflow: requirements, theoretical sizing, magnetics, component selection, simulation, review, and report generation.\n"
@@ -4523,7 +4523,7 @@ def _try_llm_qa_answer(user_query: str, rag_context: str = "", history: Optional
                 history_lines.append(f"{role}: {content[:500]}")
 
         system_prompt = (
-            "You are PE-MAS Studio's power electronics QA expert. Answer conversational questions clearly, "
+            "You are PE-GPT 2.0 Studio's power electronics QA expert. Answer conversational questions clearly, "
             "but keep engineering rigor. If the user writes Chinese, answer in Chinese. If the user writes English, "
             "answer in English. Preserve conversation context, and do not start a design workflow unless the user asks "
             "for concrete design parameters or redesign. Keep answers concise but useful."
@@ -6876,7 +6876,7 @@ def _build_acceptance_report(values: Dict[str, Any], accepted_by_user: bool = Fa
         lines.append("- This design was accepted by user decision despite unresolved validation items.")
         lines.append("- Use correction strategy and failed-items list above before production release.")
     else:
-        lines.append("- This summary reflects the latest workflow state captured by PE-MAS.")
+        lines.append("- This summary reflects the latest workflow state captured by PE-GPT 2.0.")
     return "\n".join(lines).strip()
 
 def _try_generate_skill_report(values: Dict[str, Any], accepted_by_user: bool = False) -> str:
@@ -7513,7 +7513,7 @@ async def stream_workflow(user_query: str, sid: Optional[str] = None):
         if not merged_state.get("thread_id"):
             merged_state["thread_id"] = thread_id
         start_step_key = "requirements"
-        start_message = "Starting PE-MAS collaborative design workflow"
+        start_message = "Starting PE-GPT 2.0 collaborative design workflow"
         if snapshot and getattr(snapshot, "next", None):
             start_step_key = str(snapshot.next[0])
             start_message = f"Resuming workflow from {NODE_TITLE.get(start_step_key, start_step_key)}"

@@ -1,4 +1,4 @@
-"""Entrypoint for the PE-MAS FastAPI application."""
+"""Entrypoint for the PE-GPT 2.0 FastAPI application."""
 
 from __future__ import annotations
 
