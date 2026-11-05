@@ -1,130 +1,84 @@
-<div align="center">
+# SRTP PE Benchmark
 
-# PE-GPT 2.0
+*SRTP research on improving and evaluating AI agents for power electronics design, building on PE-GPT 2.0.*
 
-### A Trustworthy Multi-Agent Design Framework for Power Converters
+A research framework for rigorously evaluating AI agents that perform power electronics design tasks. The project focuses on executable benchmarks, evidence-based reporting, and reusable research notes rather than building a new design agent.
 
-**Shi Qiu · Fanfan Lin · Xinze Li**
+The first benchmark track targets DC-DC converter workflows, especially flyback converter design. Later tracks extend the same harness to traction inverter tasks for electric vehicle power systems.
 
-[![Accepted at IEEE IRAI 2026](https://img.shields.io/badge/IEEE_IRAI_2026-Accepted-6D28D9?style=flat-square)](https://irai2026.ieee-ies.org/program/index.html)
-[![IEEE IES SYPA Travel Award](https://img.shields.io/badge/IEEE_IES-SYPA_Travel_Award-B8860B?style=flat-square)](https://irai2026.ieee-ies.org/for_authors/travel-grants/index.html)
-[![Official IEEE IES presentation](https://img.shields.io/badge/IEEE_IES-Official_Presentation-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=JzlFLe246RY)
+**Current status:** The PE-GPT 2.0 source has been imported as the starting baseline. The SRTP agent improvements, evaluation harness, and benchmark results described below are planned work.
 
-[Presentation](#official-ieee-ies-presentation) · [Framework](#framework) · [Quick start](#quick-start) · [Paper results](#paper-results) · [Citation](#citation)
+[Research plan](docs/RESEARCH_PLAN.md) · [Original PE-GPT 2.0 documentation](README_PE_GPT_2_0.md) · [Upstream repository](https://github.com/spongelovesorange/PE-GPT-2.0)
 
-</div>
+## Research objective
 
-PE-GPT 2.0 turns power-converter requirements into a traceable engineering design workflow. Specialized agents coordinate equation checks, magnetic-component design, component-record verification, PLECS simulation, validation, and correction through a browser-based design studio.
+We aim to measure whether targeted changes to existing PE-MAS agents improve the correctness and reliability of power electronics design workflows. Each improvement will be compared with the original implementation using fixed test cases, independently reviewed expected outcomes, and reproducible experiment records.
 
-The current research implementation focuses on **isolated flyback converters**. Engineering records and review gates make the assumptions, measurements, and remaining work visible throughout the process.
+## Initial agent improvements
 
-## Official IEEE IES presentation
+| Agent | Planned improvement | Evaluation focus |
+| --- | --- | --- |
+| Requirements | Normalize units, identify missing or conflicting specifications, and preserve confirmed values during follow-up changes. | Field accuracy, missing-field detection, update preservation, and unsupported assumptions. |
+| Reporter | Distinguish requirements, calculations, simulation results, and missing evidence; preserve numerical values and validation status. | Numerical fidelity, status consistency, unsupported claims, and report generation success. |
 
-<p align="center">
-  <a href="https://www.youtube.com/watch?v=JzlFLe246RY">
-    <img src="https://i.ytimg.com/vi/JzlFLe246RY/hqdefault.jpg" width="480" alt="Watch the PE-GPT 2.0 presentation on the official IEEE Industrial Electronics Society YouTube channel">
-  </a>
-</p>
+These are the first two improvement targets. We will inspect existing behavior and reproduce failures before deciding which changes are needed.
 
-<p align="center"><strong><a href="https://www.youtube.com/watch?v=JzlFLe246RY">▶ Watch the presentation</a></strong><br>Published by the <a href="https://www.youtube.com/@ieee-ies">IEEE Industrial Electronics Society</a>.</p>
+## Research roadmap
 
-- **Accepted paper:** IEEE International Conference on Responsible Artificial Intelligence (**IRAI 2026**). [Official conference program](https://confcomm-public.s3.amazonaws.com/share/IRAI26/IRAI26_program.pdf)
-- **Hackathon finalist:** IEEE IES Generative AI Hackathon.
-- **Travel award:** Shi Qiu received the **IEEE IES SYPA Travel Award**, as one of ten recipients.
+| Phase | Planned work | Deliverable |
+| --- | --- | --- |
+| 1. Understand flyback converters | Study switching operation, magnetics, CCM/DCM, component stress, and simulation waveforms; trace one PE-MAS request. | Worked design example and technical notes. |
+| 2. Establish the baseline | Record the original code version and environment; define evaluation cases and scoring rules. | Baseline outputs and reviewed test fixtures. |
+| 3. Improve selected agents | Implement focused Requirements and Reporter changes on separate branches. | Reviewed pull requests with regression checks. |
+| 4. Compare before and after | Evaluate both versions with the same inputs, model settings, and runtime budgets. | Raw outputs, comparison tables, and failure analysis. |
+| 5. Extend the benchmark | Expand DC-DC coverage, then investigate traction inverter tasks for electric vehicle power systems. | Additional tasks and evaluators after the initial track is validated. |
 
-## Framework
+## How improvements will be measured
 
-[![PE-GPT 2.0 multi-agent framework, from requirements and equation-checked design to simulation, review, correction, and reporting](assets/framework.png)](assets/framework.png)
+The initial study will evaluate each agent in isolation. Requirements tests will reuse identical messages and starting specifications. Reporter tests will reuse identical saved workflow states so that upstream changes do not distort the comparison.
 
-*Eight specialized agents work under a coordinator, supported by equation checks, magnetic-design tools, component records, simulation interfaces, and persistent memory. Figure extracted directly from the paper; click to enlarge.*
+For each agent, we propose 30 reviewed cases: 20 for development and 10 held out for final evaluation. LLM-dependent held-out cases will be repeated three times with fixed model settings and controlled memory.
 
-| Stage | What the workflow provides |
+| Agent | Primary metrics |
 | --- | --- |
-| Requirements & design | Structured specifications, explicit assumptions, topology reasoning, and equation-checked operating points |
-| Magnetics & components | Magnetic-component advice and checks against available component records |
-| Simulation & validation | PLECS integration, numerical checks, operating-condition review, and correction feedback |
-| Review & reporting | Engineering records, workflow traces, structured reports, and explicit human review gates |
+| Requirements | Correct field values, missing-field recall, preservation of unchanged fields, and unsupported assumption rate. |
+| Reporter | Correct reported values, consistency with supplied validation status, unsupported claim rate, and successful report generation. |
+| Both | Runtime, token use where available, repeatability, and remaining failure cases. |
 
-The Studio combines a **FastAPI backend**, a **browser interface**, and a **LangGraph-based flyback workflow**. PLECS measurements are required for simulation-backed claims; planning output alone is not a verified design.
+**Results:** No SRTP before-and-after evaluation results have been published yet. The research plan defines proposed experiments, not achieved performance.
 
-## Quick start
+## Run the imported PE-MAS baseline
 
-Use **Python 3.12** and an internet connection for installation and the Studio's browser libraries.
+Use Python 3.12. For Windows Git Bash:
 
 ```bash
-git clone https://github.com/spongelovesorange/PE-GPT-2.0.git
-cd PE-GPT-2.0
-python3 -m venv .venv
-source .venv/bin/activate
+git clone https://github.com/DarrenRennard/SRTP_PE_Benchmark.git
+cd SRTP_PE_Benchmark
+
+py -3.12 -m venv .venv
+source .venv/Scripts/activate
 python -m pip install -r requirements.txt
-cp .env.example .env
+cp -n .env.example .env
+```
+
+On macOS or Linux, create the environment with `python3 -m venv .venv` and activate it with `source .venv/bin/activate`.
+
+Configure `.env` for your model provider before model-backed tasks, then run:
+
+```bash
 python server.py
 ```
 
-Open **http://127.0.0.1:8000**. The example configuration starts the Studio on your local machine. On Windows, create the environment with `py -3.12 -m venv .venv` and activate it with `.venv\Scripts\Activate.ps1` in PowerShell.
+Open <http://127.0.0.1:8000>. Real PLECS simulation requires a configured, licensed PLECS installation. Full configuration details are in the [original documentation](README_PE_GPT_2_0.md#connect-your-tools).
 
-### Connect your tools
+## Collaboration and research records
 
-Edit `.env` before running model-backed design tasks:
+Work on separate feature branches and review each other's pull requests before merging into `main`. Use Issues for tasks and failure reports. Record each experiment's code commit, dataset version, model settings, expected outcomes, actual outputs, scores, and limitations.
 
-| Configuration | Purpose |
-| --- | --- |
-| `PE_MAS_LLM_CREDENTIAL` | Your model-provider credential |
-| `PE_MAS_LLM_ENDPOINT` | Optional OpenAI-compatible API base address |
-| `PE_MAS_LLM_MODEL` | Chat model ID available from your provider |
-| `PE_MAS_REQUIREMENTS_MODEL` | Requirements-analysis model ID |
-| `PE_MAS_REASONING_MODEL` | Agent-reasoning model ID |
-| `PLECS_RPC_URL` | XML-RPC address of your running, licensed PLECS Standalone installation |
+The imported baseline is [commit 75177eb](https://github.com/DarrenRennard/SRTP_PE_Benchmark/commit/75177eb1736ea78c3eb3626af8fdf9d9310a629b). Keep this reference fixed when comparing subsequent changes.
 
-The three model roles can use the same model. Credentials stay in the ignored `.env` file. The `PE_MAS_*` setting names are retained for compatibility with the earlier PE-MAS release.
+## Attribution
 
-PLECS is needed for real simulation evidence. To serve only the API, set `PE_MAS_APP_MODE=api` in `.env` and run `python server.py`; API documentation is available at `/docs`, with health status at `/api/health`.
+This SRTP project builds on [PE-GPT 2.0](https://github.com/spongelovesorange/PE-GPT-2.0) by **Shi Qiu, Fanfan Lin, and Xinze Li**, which builds on the original [PE-GPT](https://github.com/XinzeLee/PE-GPT).
 
-## Paper results
-
-The paper evaluates **96 isolated flyback cases**, with additional tolerance and repeatability studies.
-
-| Evaluation | Reported result |
-| --- | --- |
-| Engineering verification | **31 / 96** cases passed the paper's engineering checks |
-| Contribution of correction | **14** passed initially; **17** additional cases passed after correction |
-| Tolerance study | **731 / 800 (91.4%)** samples met the numerical targets |
-| Repeatability | **57 / 60 (95.0%)** runs reproduced the same final decision |
-
-[![Paper line/load sweep showing simulated power-stage efficiency, output ripple, and peak MOSFET drain-source voltage](assets/line-load-sweep.png)](assets/line-load-sweep.png)
-
-*Paper case study: a 12 V / 2 A flyback design evaluated across line and load conditions with a fixed BOM and magnetic component, without reoptimization. These are simulated power-stage results. “Engineering verified” refers to the paper's checks, not hardware qualification or production certification.*
-
-## Repository guide
-
-```text
-app/          FastAPI backend, Studio runtime, API routes and schemas
-core/         Flyback workflow, domain equations, agents and knowledge services
-data/         Topology data and PLECS model registry
-frontend/     Browser-based design Studio
-plecs-mcp/    Optional PLECS integration helper
-assets/       Two figures extracted from the paper
-server.py     Application entry point
-```
-
-Start with `core/flyback_mas/graph.py` for the design workflow and `app/studio.py` for its Studio integration. Local reports, cached data, credentials, and simulation output stay outside version control. Some general-purpose adapters and agent extensions remain placeholders; the evaluated workflow is the isolated flyback path. Thermal, feedback-loop, EMI/safety, and release decisions still require appropriate engineering evidence and human review.
-
-## Citation
-
-**PE-GPT 2.0: A Trustworthy Multi-Agent Design Framework for Power Converters**
-
-Shi Qiu, Fanfan Lin, and Xinze Li. Accepted at **IEEE IRAI 2026**.
-
-```bibtex
-@inproceedings{qiu2026pegpt2,
-  title     = {PE-GPT 2.0: A Trustworthy Multi-Agent Design Framework for Power Converters},
-  author    = {Qiu, Shi and Lin, Fanfan and Li, Xinze},
-  booktitle = {IEEE International Conference on Responsible Artificial Intelligence (IRAI)},
-  year      = {2026},
-  note      = {Accepted}
-}
-```
-
-## Acknowledgments
-
-This work builds on the original [PE-GPT project](https://github.com/XinzeLee/PE-GPT) and acknowledges the **IEEE Industrial Electronics Society Generative AI Hackathon**. Original source-code attributions and third-party component/model notices are retained.
+The imported implementation is prior work. Our planned contribution is to improve selected agents and develop reproducible evaluation methods. The original README, paper citation, reported results, and acknowledgments are preserved in [README_PE_GPT_2_0.md](README_PE_GPT_2_0.md); those results belong to the upstream project.
