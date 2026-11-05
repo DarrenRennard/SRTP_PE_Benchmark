@@ -8,7 +8,7 @@ The first benchmark track targets DC-DC converter workflows, especially flyback 
 
 **Current status:** The PE-GPT 2.0 source has been imported as the starting baseline. The SRTP agent improvements, evaluation harness, and benchmark results described below are planned work.
 
-[Research plan](docs/RESEARCH_PLAN.md) · [Original PE-GPT 2.0 documentation](README_PE_GPT_2_0.md) · [Upstream repository](https://github.com/spongelovesorange/PE-GPT-2.0)
+[Research plan](docs/RESEARCH_PLAN.md) · [Research notes](docs/RESEARCH_NOTES.md) · [Original PE-GPT 2.0 documentation](README_PE_GPT_2_0.md) · [Upstream repository](https://github.com/spongelovesorange/PE-GPT-2.0)
 
 ## Research objective
 
@@ -71,11 +71,18 @@ python server.py
 
 Open <http://127.0.0.1:8000>. Real PLECS simulation requires a configured, licensed PLECS installation. Full configuration details are in the [original documentation](README_PE_GPT_2_0.md#connect-your-tools).
 
-## Collaboration and research records
+## Research notes
 
-Work on separate feature branches and review each other's pull requests before merging into `main`. Use Issues for tasks and failure reports. Record each experiment's code commit, dataset version, model settings, expected outcomes, actual outputs, scores, and limitations.
+Brief summaries of papers we have read and ideas to apply to PE-GPT 2.0:
 
-The imported baseline is [commit 75177eb](https://github.com/DarrenRennard/SRTP_PE_Benchmark/commit/75177eb1736ea78c3eb3626af8fdf9d9310a629b). Keep this reference fixed when comparing subsequent changes.
+| Paper | Main idea | Possible application |
+| --- | --- | --- |
+| ReAct | Interleave planning, tool actions, and observations. | Extend existing agent traces with actual tool results and feedback before the next action. |
+| EngDesign | Evaluate functional engineering designs with executable checks and simulation. | Check flyback designs against specifications using validated reference cases and simulation evidence. |
+| xbench | Build evaluations around real professional tasks and useful outcomes. | Use realistic power electronics requests and measure engineering validity, time, and manual correction effort. |
+| PaperBench | Decompose complex tasks into weighted criteria and verify execution separately from implementation. | Score intermediate workflow progress and distinguish generated artifacts, successful runs, and verified results. |
+
+See [Research notes and PE-GPT 2.0 implementation ideas](docs/RESEARCH_NOTES.md) for short summaries, source references, and concrete starting points. All implementation ideas are proposed work.
 
 ## Attribution
 
